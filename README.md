@@ -52,7 +52,9 @@ An automated pipeline that generates **10+ professional ad creative variations**
 - Logo extraction  
 - Color palette detection  
 - Brand style inference  
-- Product contextualization  
+- Product contextualization
+- <img width="432" height="535" alt="image" src="https://github.com/user-attachments/assets/2ac48131-0eee-4143-bb5b-2e1fc3e7280b" />
+
 
 **Tools:** OpenCV, Pillow, ColorThief  
 
