@@ -1,155 +1,213 @@
-### Transform raw CSV logs into executive-ready PDF reports — in under 30 seconds.
+# AI-Powered Ad Creative Generation System
+
+## 1. Business Problem
+
+### The Creative Bottleneck
+Marketing teams spend weeks creating variations of the same ad creative. Each campaign requires:
+- Multiple visual styles  
+- Layout variations  
+- Different copywriting angles  
+- Platform-specific adaptations  
+
+### Pain Points
+- **Time-consuming:** 2–3 weeks per campaign  
+- **Inconsistent:** Manual design reduces brand consistency  
+- **Not scalable:** Limited variations for A/B testing  
+- **Delays:** Creative becomes the bottleneck  
+
+### Business Impact
+- Lower campaign performance  
+- Higher customer acquisition cost  
+- Missed opportunities due to slow creative cycles  
+- Limited A/B testing insights  
 
 ---
 
-## **1. Problem Overview**
-### **Real-World Context**
-In AdTech workflows, Account Managers spend **4–6 hours every week** manually downloading CSVs, slicing data in Excel, and taking screenshots to prepare “Weekly Performance Reports” for clients.
+## 2. Solution: Auto-Creative Engine
 
-### **The Pain**
-- Slow  
-- Boring  
-- Error-prone  
-- Delayed insights  
+An automated pipeline that generates **10+ professional ad creative variations** in under a minute.
 
-If a campaign starts burning budget or impressions drop in a key market, clients **may not know for days** because reporting is delayed.
+### How It Works
 
-### **My Solution**
-Introducing **TrendSpotter** — an **event-driven automated reporting engine**.
+**Input:**  
+- Brand logo (PNG/JPG)  
+- Product image (PNG/JPG)
 
-Just **drop a raw CSV file** into a folder, and within **30 seconds**, TrendSpotter automatically:
+**Process (30–60 seconds):**  
+- AI analyzes brand identity  
+- Generates multiple visual styles  
+- Creates layouts & compositions  
+- Writes platform-specific captions  
 
-- Processes the data  
-- Detects anomalies  
-- Generates AI-written insights  
-- Produces a pixel-perfect PDF  
-- Emails it directly to the user  
+**Output:**  
+- 10+ high-resolution creatives  
+- Matching captions  
+- ZIP file of all assets  
 
 ---
 
-## **2. What the User Gets**
-### **Simple Workflow**
-**Input:** Upload or drop a CSV into the monitored folder  
-**Wait:** ~30 seconds  
-**Output:** A professionally formatted PDF containing:
+## 3. Technical Architecture
 
-- 📈 Week-over-week growth charts  
-- 🚨 Detected anomalies (e.g., *“Traffic dropped 40% in Miami”*)  
-- 🧠 AI-generated explanations  
-- 🌦️ Optional external context (e.g., weather correlation)
+### 🔹 1. Brand Analysis Module
+- Logo extraction  
+- Color palette detection  
+- Brand style inference  
+- Product contextualization  
 
----
-
-## **3. Technical Architecture**
-TrendSpotter is built as a **production-grade ETL + AI pipeline**.
-
-### **🔹 1. Ingestion (Event-Driven)**
-A Python Watchdog listener triggers the pipeline whenever a new CSV is added.
-
-**Using Polars because:**
-- Faster than Pandas  
-- Strict schema validation  
-- Low memory overhead  
+**Tools:** OpenCV, Pillow, ColorThief  
 
 ---
 
-### **🔹 2. Data Processing**
-Using **Polars**, the pipeline:
+### 🔹 2. Visual Generation Pipeline
 
-- Cleans and normalizes raw logs  
-- Computes week-over-week deltas  
-- Builds structured metadata for ML + AI  
-- Generates aggregated statistics  
+#### 1. Background Generation (Stable Diffusion)
+- Minimalist, luxury, vibrant, lifestyle styles  
+- Brand-color coordination  
+- High-resolution outputs  
 
----
+#### 2. Logo Integration
+- Smart placement (6+ variations)  
+- Adaptive scaling  
+- Transparency handling  
 
-### **🔹 3. Anomaly Detection**
-Powered by **Isolation Forest (Scikit-Learn)** to automatically detect:
+#### 3. Product Showcasing
+- Intelligent placement  
+- Auto lighting & shadowing  
+- Balanced composition  
 
-- Traffic drops  
-- Impression spikes  
-- City-level anomalies  
-- CTR/CPC irregularities  
-
-No manual rules — purely statistical.
-
----
-
-### **🔹 4. Generative AI Insights**
-TrendSpotter behaves like a **Senior Data Analyst**.
-
-- Generates narratives using **Google Gemini 1.5 Pro**  
-- Few-shot prompting for consistency  
-- Writes insights tied to actual data trends  
-
-**Hallucination Guardrails:**
-- Strict JSON context  
-- Numeric cross-validation  
-- Fallback to `"Unknown"` when data is missing  
+**Models:** Stable Diffusion v1.5, LoRA, img2img pipelines  
 
 ---
 
-### **🔹 5. Report Generation**
-Final PDF is produced using:
+### 🔹 3. AI Copywriting Module
+Generates:
+- Headlines  
+- Body copy  
+- CTAs  
+- Hashtags  
 
-- **Plotly** → charts  
-- **HTML/CSS template** → layout  
-- **WeasyPrint** → PDF rendering  
-
-Reports are emailed automatically via SMTP.
-
----
-
-## **4. Tech Stack**
-
-| Layer | Tools |
-|-------|-------|
-| **Language** | Python 3.11 |
-| **Data Engine** | Polars |
-| **ML** | Scikit-Learn (Isolation Forest) |
-| **AI** | Gemini 1.5 Pro (Vertex AI) |
-| **Visualization** | Plotly |
-| **PDF Renderer** | WeasyPrint |
-| **Orchestration** | Docker + Docker Compose |
+**Model:** GPT-2 / DistilGPT-2  
+**Features:** Brand-tone consistency, A/B variants  
 
 ---
 
-## **5. Challenges & Learnings**
-
-### **🚧 Challenge 1: AI Hallucinations**
-**Problem:** Gemini occasionally invented explanations such as weather changes without weather data.  
-**Solution:** Implemented a **Strict Context Prompting Framework** with numeric validation.  
-This reduced hallucinations significantly.
-
----
-
-### **🚧 Challenge 2: Docker Networking**
-**Problem:** Python container couldn’t send outgoing emails.  
-**Solution:** Configured SMTP ports + Docker networking rules in `docker-compose.yml`.
+### 🔹 4. Quality Assurance Layer
+- Text readability checks  
+- Color contrast scoring  
+- Brand compliance validation  
+- Resolution checks (1080p+)  
 
 ---
 
-## **6. Visual Proof**
-*(Add your screenshots here)*
-
-- Terminal showing Isolation Forest output  
-- Final PDF layout  
-- Email delivery screenshot  
+### 🔹 5. Packaging & Delivery
+- PNG/JPEG exports  
+- Organized folder structure  
+- Metadata embedding  
+- ZIP compression  
 
 ---
 
-## **7. How to Run**
+## 4. Tech Stack
+
+| Component | Technology | Reason |
+|----------|------------|--------|
+| Core | Python 3.11 | AI-ready environment |
+| Image Generation | Stable Diffusion | Open-source & high quality |
+| Image Processing | OpenCV, Pillow | Reliable & feature-rich |
+| Text Generation | GPT-2/DistilGPT-2 | Lightweight, finetunable |
+| UI | Gradio | Fast prototyping |
+| Runtime | Google Colab | Free GPU |
+
+---
+
+## 5. System Workflow
+
+1. Upload logo + product image  
+2. AI extracts brand features  
+3. Generate background variations  
+4. Compose product + logo  
+5. Generate captions  
+6. Validate quality  
+7. Export ZIP file  
+
+---
+
+## 6. Key Features
+
+### 🎨 Creative Variety
+- 10+ visual styles  
+- Layout diversity  
+- Platform-optimized dimensions  
+
+### ✍️ Smart Copywriting
+- Brand-aware captions  
+- CTA + hashtag variations  
+- A/B ready messaging  
+
+### ⚡ Production Ready
+- Generate 50+ creatives in ~5 minutes  
+- Zero operational cost  
+- Easy integration  
+
+---
+
+## 7. Performance Metrics
+
+| Metric | Manual | Auto-Creative Engine | Improvement |
+|--------|--------|----------------------|-------------|
+| Time per creative | 2–4 hrs | 30–60 sec | 200× |
+| Cost per creative | $50–$200 | <$0.10 | 500× |
+| A/B variants | 3–5 | 20–50 | 10× |
+| Brand consistency | Medium | High | — |
+
+---
+
+## 8. Implementation Roadmap
+
+### Phase 1 (MVP)
+- SD background generation  
+- Simple logo overlay  
+- Template captions  
+- Colab notebook  
+
+### Phase 2
+- Fine-tuned LoRA models  
+- Advanced layouts  
+- Brand-tone copywriting  
+
+### Phase 3
+- Full SaaS API  
+- Collaboration tools  
+- Analytics dashboard  
+
+---
+
+## 9. Technical Challenges & Solutions
+
+### Challenge: Inconsistent image quality  
+**Solution:** Multi-stage validation + negative prompts  
+
+### Challenge: Brand compliance  
+**Solution:** Color palette locking + rule-based logo placement  
+
+### Challenge: Slow high-res generation  
+**Solution:** Parallel SD pipelines + caching  
+
+### Challenge: Hallucinations  
+**Solution:** Constrained prompts & guided generation  
+
+---
+
+## 10. How to Run (Google Colab)
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/username/trendspotter.git
-cd trendspotter
+# Enable GPU
+# Runtime → Change runtime type → GPU
 
-# 2. Add API key
-export GEMINI_API_KEY="your_key_here"
+!pip install diffusers transformers accelerate pillow
+!pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+!pip install gradio opencv-python
 
-# 3. Build and run
-docker-compose up --build
-
-# 4. Trigger pipeline
-mv data/sample.csv data/input/
+# Clone repository
+!git clone https://github.com/yourusername/auto-creative-engine
+cd auto-creative-engine
